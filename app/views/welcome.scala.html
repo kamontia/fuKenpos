@@ -1,0 +1,44 @@
+@(message: String, style: String = "scala",userList:List[String])
+@import tags.loginform
+    @defining(play.core.PlayVersion.current) { version =>
+
+        <section id="top">
+            <div class="wrapper">
+                <h1>Fukenpos</h1>
+            </div>
+        </section>
+
+        <div id="content" class="wrapper doc">
+            <article>
+
+                <h1>fuKENPOSへようこそ</h1>
+
+                <h2>fuKENPOSとは？</h2>
+                <p>
+                    　KENPOS サービス自動入力を行います。これにより継続的にポイントを得ることが可能です。
+                    日頃運動はしたり、生活習慣には気をつけているんだけど「毎日継続的に入力するのが面倒だ！」と方のために代わりに入力を行います。
+                    (あなたの行動を遠隔で監視するものではありません。個別に設定したテンプレートに従って入力するだけです)<br>
+                    　なお、このサービスは自己責任で使用して下さい。
+                </p>
+
+                <h3>出来ること</h3>
+                <li>「歩数を記録する」：1日の歩数をランダムに入力可能です(最小と最大数を指定可能)</li>
+                <li>「行動を記録する」：表示された項目について「できた」「できなかった」を入力可能です</li>
+
+                <h3>出来ないこと</h3>
+                <li>「体重を記録する」</li>
+                <li>「食事を記録する」</li>
+
+                なお、今後機能を拡張する予定です。
+
+                <h2>さっそく使ってみよう
+
+
+                @loginform(userList)
+
+
+
+            </article>
+
+        </div>
+    }
