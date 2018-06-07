@@ -1,0 +1,17 @@
+@(userForm: Form[User])(implicit request: RequestHeader, messagesProvider: MessagesProvider)
+    @import helper._
+    @main("enrtry user") {
+        <h1>Entry User</h1>
+        @* Helperを使ってFormを生成。Submit時のActionを指定している*@
+        @helper.form(action = routes.UserController.entrySubmit()) {
+            <fieldset>
+                @CSRF.formField
+                @helper.inputText(userForm("account"))
+                @helper.inputText(userForm("email"))
+                @helper.inputText(userForm("kenpos_id"))
+                @helper.inputPassword(userForm("kenpos_passwd"))
+            </fieldset>
+            <input type="submit" value="entry">
+        }
+
+    }

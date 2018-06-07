@@ -18,7 +18,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     */
   def index = Action {
 
-    val nList = List("This is a pen.", "That is a dog.")
+    val nList = List("This is a pen.", "That is a dog.","はい")
     Ok(views.html.index("work","scala", nList))
   }
 

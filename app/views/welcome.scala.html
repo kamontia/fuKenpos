@@ -1,5 +1,5 @@
 @(message: String, style: String = "scala",userList:List[String])
-@import tags.loginform
+@import tags.entry
     @defining(play.core.PlayVersion.current) { version =>
 
         <section id="top">
@@ -31,10 +31,18 @@
 
                 なお、今後機能を拡張する予定です。
 
-                <h2>さっそく使ってみよう
+                <h2>さっそく使ってみよう</h2>
+
+                <button>新規登録をする</button>
 
 
-                @loginform(userList)
+                <div id="login_form">
+                    登録済みの方はアカウント情報を入力してログイン
+                </div>
+
+
+
+
 
 
 
