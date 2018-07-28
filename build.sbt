@@ -2,7 +2,7 @@ name := "Web"
  
 version := "1.0" 
       
-lazy val `web` = (project in file(".")).enablePlugins(PlayJava)
+lazy val `web` = (project in file(".")).enablePlugins(PlayJava,PlayEbean)
 
 resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases"
       
