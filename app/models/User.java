@@ -1,13 +1,13 @@
 package models;
 
-import com.avaje.ebean.Model;
+
 import play.data.format.Formats;
 import play.data.validation.Constraints;
+import play.db.ebean.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import java.util.Date;
@@ -18,6 +18,8 @@ import java.util.Date;
 public class User extends Model {
 
     @Id
+    private Long id;
+
     @Min(4)
     @Max(16)
     private String userid;
@@ -33,7 +35,6 @@ public class User extends Model {
     private String nickname;
 
     @Constraints.Email
-    @Constraints.Required
     private String email;
 
     @Formats.DateTime(pattern = "yyyy/MM/dd/mm:ss")
@@ -43,7 +44,16 @@ public class User extends Model {
     private Date updated;
 
 
+
     /* Getter and Setter */
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getUserid() {
         return userid;
     }
@@ -90,6 +100,12 @@ public class User extends Model {
 
     public void setUpdated(Date updated) {
         this.updated = updated;
+    }
+
+    public static Finder<Long, User> find = new Finder<Long, User>(Long.class, User.class);
+
+    public static User findByName(String input) {
+        return User.find.where().eq("id", input).findList().get(0);
     }
 
 }
