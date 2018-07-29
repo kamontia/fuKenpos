@@ -1,45 +1,42 @@
 package models;
 
+import com.avaje.ebean.annotation.CreatedTimestamp;
+import com.avaje.ebean.annotation.UpdatedTimestamp;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import java.util.Date;
 
 @Entity
 @Table
-public class UserInfo extends Model {
+public class UserInfoModel extends Model {
     @Id
     private Long id;
 
-    @Min(4)
-    @Max(16)
-    private String userid;
+    public static Finder<Long, UserInfoModel> find = new Finder<Long, UserInfoModel>(Long.class, UserInfoModel.class);
 
     @Constraints.Required
     private String kenpos_id;
 
     @Constraints.Required
     private String kenpos_password;
-
-    @Constraints.Required
-    @Min(0)
-    private Integer min_step;
+    @OneToOne(cascade = CascadeType.ALL)
+    public UserModel user;
 
     @Constraints.Required
     private Integer max_step;
+    @Constraints.MinLength(4)
+    @Constraints.MaxLength(16)
 
+    private String userid;
+    @Constraints.Required
+    @Constraints.MinLength(0)
+    private Integer min_step;
     @Formats.DateTime(pattern = "yyyy/MM/dd/mm:ss")
+    @CreatedTimestamp
     private Date created;
-
-    @Formats.DateTime(pattern = "yyyy/MM/dd/mm:ss")
-    private Date updated;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    public User user;
 
     /* Getter and Setter */
     public Long getId() {
@@ -106,9 +103,11 @@ public class UserInfo extends Model {
         this.updated = updated;
     }
 
-    public static Finder<Long, UserInfo> find = new Finder<Long, UserInfo>(Long.class, UserInfo.class);
+    @Formats.DateTime(pattern = "yyyy/MM/dd/mm:ss")
+    @UpdatedTimestamp
+    private Date updated;
 
-    public static UserInfo findByName(String input) {
-        return UserInfo.find.where().eq("id", input).findList().get(0);
+    public static UserInfoModel findByName(String input) {
+        return UserInfoModel.find.where().eq("id", input).findList().get(0);
     }
 }

@@ -1,6 +1,8 @@
 package models;
 
 
+import com.avaje.ebean.annotation.CreatedTimestamp;
+import com.avaje.ebean.annotation.UpdatedTimestamp;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
@@ -8,41 +10,33 @@ import play.db.ebean.Model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import java.util.Date;
 
 
 @Entity
 @Table
-public class User extends Model {
+public class UserModel extends Model {
 
     @Id
     private Long id;
 
-    @Min(4)
-    @Max(16)
+    public static Finder<Long, UserModel> find = new Finder<Long, UserModel>(Long.class, UserModel.class);
+    @Constraints.MinLength(4)
+    @Constraints.MaxLength(16)
     private String userid;
-
     @Constraints.Required
-    @Min(4)
-
-    @Max(8)
+    @Constraints.MinLength(4)
+    @Constraints.MaxLength(16)
     private String password;
-
-    @Constraints.Required
-    @Max(16)
-    private String nickname;
 
     @Constraints.Email
     private String email;
-
+    @Constraints.Required
+    @Constraints.MaxLength(16)
+    private String nickname;
     @Formats.DateTime(pattern = "yyyy/MM/dd/mm:ss")
+    @CreatedTimestamp
     private Date created;
-
-    @Formats.DateTime(pattern = "yyyy/MM/dd/mm:ss")
-    private Date updated;
-
 
 
     /* Getter and Setter */
@@ -102,10 +96,12 @@ public class User extends Model {
         this.updated = updated;
     }
 
-    public static Finder<Long, User> find = new Finder<Long, User>(Long.class, User.class);
+    @Formats.DateTime(pattern = "yyyy/MM/dd/mm:ss")
+    @UpdatedTimestamp
+    private Date updated;
 
-    public static User findByName(String input) {
-        return User.find.where().eq("id", input).findList().get(0);
+    public static UserModel findByName(String input) {
+        return UserModel.find.where().eq("id", input).findList().get(0);
     }
 
 }

@@ -1,0 +1,26 @@
+@(msg: String, form: Form[UserModel])
+
+    @layout.main("ユーザー登録") {
+        <h1>ユーザー登録をしましょう</h1>
+        <p>@msg</p>
+
+        @helper.form(action = routes.UserController.create) {
+            @(helper.inputText(
+                field = form("userid")
+            ))
+
+            @helper.inputPassword(
+                field = form("password")
+            )
+
+            @helper.inputText(
+                field = form("nickname")
+            )
+
+            @helper.inputText(
+                field = form("email")
+            )
+
+            <input type="submit">
+        }
+    }
