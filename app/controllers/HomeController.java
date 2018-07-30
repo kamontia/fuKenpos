@@ -20,7 +20,7 @@ public class HomeController extends Controller {
      */
     public Result index() {
         Form<UserModel> f = new Form(UserModel.class);
-        return ok(index.render("Hello World", f));
+        return ok(index.render("", f));
     }
 
 }

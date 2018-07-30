@@ -1,0 +1,24 @@
+@(form: Form[Login])
+
+@layout.main("ユーザー登録") {
+    <h1>ログイン画面</h1>
+    @* <p>@msg</p> *@
+
+    @helper.form(action = routes.LoginController.authenticate()) {
+        @helper.CSRF.formField
+        @if(form.hasGlobalErrors){
+            <p class="error">@form.globalError.message()</p>
+        }
+        @(helper.inputText(
+            field = form("username")
+        ))
+
+        @helper.inputPassword(
+            field = form("password")
+        )
+
+        <input type="submit">
+    }
+
+    <p> パスワードを忘れた</p>
+}

@@ -7,6 +7,7 @@ import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -23,7 +24,8 @@ public class UserModel extends Model {
     public static Finder<Long, UserModel> find = new Finder<Long, UserModel>(Long.class, UserModel.class);
     @Constraints.MinLength(4)
     @Constraints.MaxLength(16)
-    private String userid;
+    @Column(unique = true)
+    private String username;
     @Constraints.Required
     @Constraints.MinLength(4)
     @Constraints.MaxLength(16)
@@ -48,12 +50,12 @@ public class UserModel extends Model {
         this.id = id;
     }
 
-    public String getUserid() {
-        return userid;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserid(String userid) {
-        this.userid = userid;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -103,5 +105,7 @@ public class UserModel extends Model {
     public static UserModel findByName(String input) {
         return UserModel.find.where().eq("id", input).findList().get(0);
     }
+
+
 
 }

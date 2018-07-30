@@ -16,7 +16,9 @@ libraryDependencies ++= Seq(
   cache,
   javaJpa,
   "org.hibernate" % "hibernate-entitymanager" % "4.3.9.Final", // replace by your jpa implementation,
-  "org.webjars" % "bootstrap" % "3.0.0"
+  "org.webjars" % "bootstrap" % "3.0.0",
+//  "be.objectify" %% "deadbolt-java" % "2.6.1"
+  filters
 )
 
 unmanagedResourceDirectories in Test <+= baseDirectory(_ / "target/web/public/test")

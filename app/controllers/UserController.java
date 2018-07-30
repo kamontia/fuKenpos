@@ -28,8 +28,14 @@ public class UserController extends Controller {
         Form<UserModel> f = new Form<UserModel>(UserModel.class).bindFromRequest();
         if (!f.hasErrors()) {
             UserModel data = f.get();
-            data.save();
-            System.out.println(data.getUserid());
+
+            try{
+                data.save();
+            } catch (Exception e){
+                System.out.println(e);
+
+            }
+            System.out.println(data.getUsername());
             return redirect("/");
         } else {
             return badRequest(create.render("ERROR", f));
