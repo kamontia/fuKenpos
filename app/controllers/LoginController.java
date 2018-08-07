@@ -53,6 +53,7 @@ public class LoginController extends Controller {
         Form<Login> loginForm = new Form<Login>(Login.class).bindFromRequest();
         if (loginForm.hasErrors()) {
             Logger.error("bind error");
+            flash("errormsg", "ログインに失敗しました");
             return badRequest(login.render(loginForm));
         } else {
             session().clear();

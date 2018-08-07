@@ -2,7 +2,9 @@
 
 @layout.main("ユーザー登録") {
     <h1>ログイン画面</h1>
-    @* <p>@msg</p> *@
+    @if(flash.get("errormsg") != null){
+        <p>@flash.get("errormsg")</p>
+    }
 
     @helper.form(action = routes.LoginController.authenticate()) {
         @helper.CSRF.formField

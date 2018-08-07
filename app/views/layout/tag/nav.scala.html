@@ -9,21 +9,25 @@
             <li class="nav-item active">
                 <a class="nav-link" href="@routes.LoginController.index()">ホーム <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">ユーザー情報</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">実行ログ</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="@routes.UserController.add()">登録</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="@routes.LoginController.login()">ログイン</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="@routes.LoginController.logout()">ログアウト</a>
-            </li>
+            @if(session.get("username")==null) {
+                <li class="nav-item">
+                    <a class="nav-link" href="@routes.UserController.add()">登録</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@routes.LoginController.login()">ログイン</a>
+                </li>
+            }
+            @if(session.get("username")!=null) {
+                <li class="nav-item">
+                    <a class="nav-link" href="#">ユーザー情報</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">実行ログ</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@routes.LoginController.logout()">ログアウト</a>
+                </li>
+            }
 
         </ul>
     </div>
