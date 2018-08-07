@@ -28,15 +28,12 @@ public class Login {
 
         if (password != null) {
             hashedPassword = sha512(password);
-            Logger.info("Created Hashed Password");
-            System.out.println(hashedPassword);
         }
-
         return find.where().eq("username", username).eq("password", hashedPassword).findUnique();
 
     }
 
-    private String sha512(String password) throws NoSuchAlgorithmException {
+    public String sha512(String password) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("SHA-512");
         StringBuilder sb = new StringBuilder();
         md.update(password.getBytes());

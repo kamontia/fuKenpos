@@ -1,11 +1,14 @@
 package controllers;
 
 
+import models.Login;
 import models.UserModel;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.template.create;
+
+import java.security.NoSuchAlgorithmException;
 
 public class UserController extends Controller {
 
@@ -24,11 +27,13 @@ public class UserController extends Controller {
      *
      * @return
      */
-    public Result create() {
+    public Result create() throws NoSuchAlgorithmException {
         Form<UserModel> f = new Form<UserModel>(UserModel.class).bindFromRequest();
         if (!f.hasErrors()) {
             UserModel data = f.get();
-
+            Login hashedPassword= new Login();
+            String password = data.getPassword();
+            data.setPassword(hashedPassword.sha512(password));
             try{
                 data.save();
             } catch (Exception e){

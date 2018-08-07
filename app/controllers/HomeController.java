@@ -1,10 +1,11 @@
 package controllers;
 
+import models.SecuredModel;
 import models.UserModel;
-import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.index;
+import play.mvc.Security;
+import views.html.home;
 
 /**
  * This controller contains an action to handle HTTP requests
@@ -18,9 +19,13 @@ public class HomeController extends Controller {
      * this method will be called when the application receives a
      * <code>GET</code> request with a path of <code>/</code>.
      */
+
+    @Security.Authenticated(SecuredModel.class)
     public Result index() {
-        Form<UserModel> f = new Form(UserModel.class);
-        return ok(index.render("", f));
+        System.out.println( UserModel.find.where().eq("username",request().username()).findUnique());
+        return ok(home.render(
+                UserModel.find.where().eq("username",request().username()).findList().get(0)
+        ));
     }
 
 }

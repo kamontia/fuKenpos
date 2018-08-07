@@ -3,6 +3,7 @@ package controllers;
 import models.Login;
 import models.SecuredModel;
 import models.UserModel;
+import org.h2.engine.User;
 import play.Logger;
 import play.data.Form;
 import play.db.ebean.Model;
@@ -13,23 +14,27 @@ import play.mvc.Result;
 import play.mvc.Security;
 import views.html.index;
 import views.html.login;
+import views.html.userHome;
 
 import static play.data.Form.form;
 
 public class LoginController extends Controller {
 
+
     /**
      * ログイン完了？
+     *
      * @return
      */
     @Security.Authenticated(SecuredModel.class)
     public Result index() {
-        Form<Login> form = new Form<Login>(Login.class);
-        return ok(login.render(form));
+        Form<UserModel> form = new Form<UserModel>(UserModel.class);
+        return ok(index.render("",form));
     }
 
     /**
      * ログイン画面の表示
+     *
      * @return
      */
     @AddCSRFToken
@@ -40,6 +45,7 @@ public class LoginController extends Controller {
 
     /**
      * 認証機能
+     *
      * @return
      */
     @RequireCSRFCheck
@@ -49,21 +55,23 @@ public class LoginController extends Controller {
             Logger.error("bind error");
             return badRequest(login.render(loginForm));
         } else {
-           session("username",loginForm.get().getUsername());
-           String returnUrl = ctx().session().get("returnUrl");
-           if(returnUrl == null || returnUrl.equals("")|| returnUrl.equals(routes.LoginController.index().absoluteURL(request()))) {
-               returnUrl = routes.LoginController.index().url();
-           }
-           return redirect(returnUrl);
+            session().clear();
+            session("username", loginForm.get().getUsername());
+            String returnUrl = ctx().session().get("returnUrl");
+            if (returnUrl == null || returnUrl.equals("") || returnUrl.equals(routes.LoginController.index().absoluteURL(request()))) {
+                returnUrl = routes.HomeController.index().url();
+            }
+            return redirect(returnUrl);
         }
     }
 
     /**
      * ログアウト機能
+     *
      * @return
      */
     @Security.Authenticated(SecuredModel.class)
-    public Result logout(){
+    public Result logout() {
         session().clear();
         return redirect(routes.HomeController.index());
     }
